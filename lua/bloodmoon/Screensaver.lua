@@ -7,7 +7,6 @@ local prefer = require("infra.prefer")
 local rifts = require("infra.rifts")
 
 local facts = require("bloodmoon.facts")
-local is_idle = require("bloodmoon.is_idle")
 
 local api = vim.api
 local uv = vim.loop
@@ -22,9 +21,10 @@ local function set_interval(interval, callback)
 end
 
 ---@class bloodmoon.Screensaver
----@field scene bloodmoon.Scene
----@field winid integer
----@field timer userdata
+---@field private scene bloodmoon.Scene
+---@field private winid integer
+---@field private timer userdata
+---@field private is_idle fun(): boolean
 local Screensaver = {}
 Screensaver.__index = Screensaver
 
@@ -52,7 +52,7 @@ function Screensaver:create_buf(screen_width, screen_height)
     end
   end
 
-  return Ephemeral({ namepat = "screensaver://iusenvimbtw/{bufnr}" }, lines)
+  return Ephemeral({ namepat = "screensaver://{bufnr}" }, lines)
 end
 
 function Screensaver:enter()
@@ -68,7 +68,7 @@ function Screensaver:enter()
   prefer.wo(self.winid, "list", false)
 
   do --press any key to dismiss
-    ex.eval("redraw!")
+    ex("mode") --it clears cmdline, while :redraw! not
     vim.fn.getchar()
 
     api.nvim_win_close(self.winid, true)
@@ -82,7 +82,7 @@ function Screensaver:enable()
   self.timer = set_interval(
     facts.check_interval,
     vim.schedule_wrap(function()
-      if not is_idle() then return end
+      if not self.is_idle() then return end
       self:enter()
     end)
   )
@@ -96,5 +96,6 @@ function Screensaver:disable()
 end
 
 ---@param scene bloodmoon.Scene
+---@param is_idle fun(): boolean
 ---@return bloodmoon.Screensaver
-return function(scene) return setmetatable({ scene = scene }, Screensaver) end
+return function(scene, is_idle) return setmetatable({ scene = scene, is_idle = idle }, Screensaver) end
