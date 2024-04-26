@@ -5,7 +5,7 @@ local facts = require("bloodmoon.facts")
 local api = vim.api
 local uv = vim.loop
 
-local ns = api.nvim_create_namespace("bloodmoon:isidle")
+local ns = api.nvim_create_namespace("bloodmoon:idle")
 
 local last = uv.hrtime()
 local enable = false
