@@ -58,7 +58,7 @@ end
 function Screensaver:enter()
   if self.winid and api.nvim_win_is_valid(self.winid) then return end
 
-  --todo: WinResized
+  --todo: VimResized
   local screen_width = vim.go.columns
   local screen_height = vim.go.lines - vim.go.cmdheight
 
