@@ -1,6 +1,7 @@
 local M = {}
 
-local fn = require("infra.fn")
+local itertools = require("infra.itertools")
+local strlib = require("infra.strlib")
 
 local api = vim.api
 
@@ -12,7 +13,7 @@ local api = vim.api
 ---@param str string
 ---@return bloodmoon.Scene
 local function Scene(str)
-  local lines = fn.split(str, "\n")
+  local lines = strlib.splits(str, "\n")
 
   --trim blank lines
   for i = 1, #lines do
@@ -24,7 +25,7 @@ local function Scene(str)
     table.remove(lines, #lines)
   end
 
-  local width = fn.max(fn.map(api.nvim_strwidth, lines))
+  local width = itertools.max(itertools.map(api.nvim_strwidth, lines))
   local height = #lines
 
   return { lines = lines, width = width, height = height }
