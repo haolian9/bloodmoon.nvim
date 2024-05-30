@@ -3,7 +3,7 @@ local M = {}
 local facts = require("bloodmoon.facts")
 
 local api = vim.api
-local uv = vim.loop
+local uv = vim.uv
 
 local ns = api.nvim_create_namespace("bloodmoon:idle")
 

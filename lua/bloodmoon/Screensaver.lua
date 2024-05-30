@@ -9,7 +9,7 @@ local rifts = require("infra.rifts")
 local facts = require("bloodmoon.facts")
 
 local api = vim.api
-local uv = vim.loop
+local uv = vim.uv
 
 ---@param interval integer @in millisecond
 ---@param callback fun()
