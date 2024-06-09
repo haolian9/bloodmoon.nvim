@@ -3,6 +3,7 @@
 
 local Ephemeral = require("infra.Ephemeral")
 local ex = require("infra.ex")
+local iuv = require("infra.iuv")
 local prefer = require("infra.prefer")
 local rifts = require("infra.rifts")
 
@@ -15,7 +16,7 @@ local uv = vim.uv
 ---@param callback fun()
 ---@return userdata
 local function set_interval(interval, callback)
-  local timer = uv.new_timer()
+  local timer = iuv.new_timer()
   timer:start(interval, interval, callback)
   return timer
 end
