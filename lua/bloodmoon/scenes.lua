@@ -25,7 +25,7 @@ local function Scene(str)
     table.remove(lines, #lines)
   end
 
-  local width = its(lines):map(api.nvim_strwidth):max()
+  local width = its(lines):map(api.nvim_strwidth):max() or 0
   local height = #lines
 
   return { lines = lines, width = width, height = height }
