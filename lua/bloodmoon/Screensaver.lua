@@ -4,12 +4,12 @@
 local Ephemeral = require("infra.Ephemeral")
 local ex = require("infra.ex")
 local iuv = require("infra.iuv")
+local ni = require("infra.ni")
 local prefer = require("infra.prefer")
 local rifts = require("infra.rifts")
 
 local facts = require("bloodmoon.facts")
 
-local api = vim.api
 local uv = vim.uv
 
 ---@param interval integer @in millisecond
@@ -57,7 +57,7 @@ function Screensaver:create_buf(screen_width, screen_height)
 end
 
 function Screensaver:enter()
-  if self.winid and api.nvim_win_is_valid(self.winid) then return end
+  if self.winid and ni.win_is_valid(self.winid) then return end
 
   --todo: VimResized
   local screen_width = vim.go.columns
@@ -72,7 +72,7 @@ function Screensaver:enter()
     ex("mode") --it clears cmdline, while :redraw! not
     vim.fn.getchar()
 
-    api.nvim_win_close(self.winid, true)
+    ni.win_close(self.winid, true)
     self.winid = nil
   end
 end
@@ -99,4 +99,4 @@ end
 ---@param scene bloodmoon.Scene
 ---@param is_idle fun(): boolean
 ---@return bloodmoon.Screensaver
-return function(scene, is_idle) return setmetatable({ scene = scene, is_idle = idle }, Screensaver) end
+return function(scene, is_idle) return setmetatable({ scene = scene, is_idle = is_idle }, Screensaver) end

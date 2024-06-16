@@ -1,9 +1,8 @@
 local M = {}
 
 local its = require("infra.its")
+local ni = require("infra.ni")
 local strlib = require("infra.strlib")
-
-local api = vim.api
 
 ---@class bloodmoon.Scene
 ---@field lines string[]
@@ -25,7 +24,7 @@ local function Scene(str)
     table.remove(lines, #lines)
   end
 
-  local width = its(lines):map(api.nvim_strwidth):max() or 0
+  local width = its(lines):map(ni.strwidth):max() or 0
   local height = #lines
 
   return { lines = lines, width = width, height = height }
