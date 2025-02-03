@@ -53,7 +53,16 @@ function Screensaver:create_buf(screen_width, screen_height)
     end
   end
 
-  return Ephemeral({ namepat = "screensaver://{bufnr}" }, lines)
+  local bufnr = Ephemeral({ namepat = "screensaver://{bufnr}" }, lines)
+
+  for idx, line in ipairs(lines) do
+    if line ~= "" then
+      local lnum = idx - 1
+      ni.buf_add_highlight(bufnr, 0, "BloodMoon", lnum, 0, -1)
+    end
+  end
+
+  return bufnr
 end
 
 function Screensaver:enter()
