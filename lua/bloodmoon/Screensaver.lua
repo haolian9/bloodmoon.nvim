@@ -68,7 +68,6 @@ end
 function Screensaver:enter()
   if self.winid and ni.win_is_valid(self.winid) then return end
 
-  --todo: VimResized
   local screen_width = vim.go.columns
   local screen_height = vim.go.lines - vim.go.cmdheight
 
@@ -80,6 +79,7 @@ function Screensaver:enter()
   do --press any key to dismiss
     ex("mode") --it clears cmdline, while :redraw! not
     vim.fn.getchar()
+    --todo: dismiss on VimResized
 
     ni.win_close(self.winid, true)
     self.winid = nil
