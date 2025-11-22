@@ -4,6 +4,7 @@
 local Ephemeral = require("infra.Ephemeral")
 local ex = require("infra.ex")
 local iuv = require("infra.iuv")
+local mi = require("infra.mi")
 local ni = require("infra.ni")
 local prefer = require("infra.prefer")
 local rifts = require("infra.rifts")
@@ -58,7 +59,7 @@ function Screensaver:create_buf(screen_width, screen_height)
   for idx, line in ipairs(lines) do
     if line ~= "" then
       local lnum = idx - 1
-      ni.buf_add_highlight(bufnr, 0, "BloodMoon", lnum, 0, -1)
+      mi.buf_highlight_line(bufnr, facts.xmark_ns, lnum, "BloodMoon")
     end
   end
 
