@@ -7,9 +7,8 @@ a screensaver for nvim
 * not configurable yet
 
 ## prerequisites
-* nvim 0.9.*
+* nvim 0.11.*
 * haolian9/infra.nvim
-
 
 ## usage
 
